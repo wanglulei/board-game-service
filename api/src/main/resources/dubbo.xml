@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">
+
+    <dubbo:application name="${dubbo.application.name}" logger="slf4j" />
+
+    <dubbo:registry id="registry"
+                    address="${dubbo.registry.address}"
+                    register="${dubbo.registry.register}"
+                    check="${dubbo.registry.check}"/>
+
+    <dubbo:protocol name="${dubbo.protocol.name}" id="protocol"
+                    port="${dubbo.protocol.port}"
+                    threadpool="${dubbo.protocol.threadpool}"
+                    />
+
+    <dubbo:provider accepts="${dubbo.provider.accepts}"
+                    timeout="${dubbo.provider.timeout}"
+                    connections="${dubbo.provider.connections}"
+                    group="wifi_service_provider"
+                    version="1.0.0"
+                    retries="${dubbo.provider.retries}"/>
+
+
+    <dubbo:service
+            interface="com.dl.board.game.dubbo.BoardGameProvider"
+            ref="boardGameProvider"
+            group="board_game_service_provider"
+            version="0.0.1"
+            registry="registry"
+            protocol="protocol"
+    />
+
+</beans>
